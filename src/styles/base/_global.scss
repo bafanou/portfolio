@@ -1,0 +1,77 @@
+// =============================================================
+//  Styles globaux
+// =============================================================
+@use '../abstracts/mixins' as *;
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+// Curseur natif masqué uniquement quand le curseur custom est actif
+// (classe posée par le composant Cursor — jamais sur tactile).
+.has-cursor,
+.has-cursor a,
+.has-cursor button {
+  cursor: none;
+}
+
+// Sélection de texte teintée à l'accent.
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+// Accessibilité : anneau de focus visible au clavier.
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+// ----- Coquille applicative -----
+// Le scroll est HORIZONTAL sur desktop (Lenis, Phase 3) : le contenu
+// s'étire sur l'axe X. Sur mobile, fallback en scroll vertical natif.
+#app {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+// Canvas WebGL : fixe, plein écran, derrière le contenu, non cliquable.
+.webgl {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-canvas);
+  pointer-events: none;
+}
+
+// Le contenu DOM des pages passe AU-DESSUS du canvas.
+[data-page] {
+  position: relative;
+  z-index: var(--z-content);
+  display: block;
+  width: 100%;
+}
+
+// Conteneur de section générique (padding standard).
+.section {
+  padding: var(--section-padding) var(--gutter);
+}
+
+// Helper d'accessibilité : masque visuellement en gardant lisible aux lecteurs d'écran.
+.u-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

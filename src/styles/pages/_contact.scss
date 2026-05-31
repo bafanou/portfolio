@@ -1,0 +1,140 @@
+// =============================================================
+//  Page Contact
+// =============================================================
+@use '../abstracts/mixins' as *;
+
+.panel--contact {
+  align-items: flex-start;
+  gap: clamp(0.8rem, 2vh, 1.8rem);
+  padding: var(--section-padding) var(--gutter);
+  // Laisse de la place pour la nav bas + flèche scroll.
+  padding-bottom: clamp(140px, 16vh, 220px);
+}
+
+// ----- Label (en peach, cohérent avec About) -----
+.contact__label {
+  color: #f4b89a;
+  letter-spacing: 0.1em;
+}
+
+// ----- Titre éditorial -----
+.contact__title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 9vw, 10rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  margin-top: clamp(0.5rem, 2vh, 1.2rem);
+
+  em {
+    font-style: italic;
+    color: var(--color-v-hover); // mauve clair
+  }
+}
+
+// ----- Phrase d'intro -----
+.contact__intro {
+  max-width: 46ch;
+  color: var(--color-text);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  margin-top: clamp(0.8rem, 2vh, 1.5rem);
+}
+
+// ----- Email mis en avant (lien display, soulignement animé) -----
+.contact__email {
+  position: relative;
+  align-self: flex-start;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 4rem);
+  line-height: 1;
+  color: var(--color-text);
+  margin-top: clamp(1rem, 3vh, 2rem);
+  padding-bottom: 0.1em;
+
+  // Trait persistant qui se rétracte au survol (effet inversé).
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    transform: scaleX(1);
+    transform-origin: left center;
+    transition: transform var(--dur-mid) var(--ease-out);
+  }
+
+  &:hover {
+    color: var(--color-v-hover);
+  }
+
+  &:hover::after {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+}
+
+// ----- Réseaux numérotés (liste verticale, façon éditorial) -----
+.contact__socials {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.4rem, 1.2vh, 0.9rem);
+  margin-top: clamp(1.2rem, 3vh, 2rem);
+}
+
+.contact__social {
+  display: inline-flex;
+  align-items: baseline;
+  gap: clamp(0.7rem, 1.2vw, 1.1rem);
+  font-family: var(--font-display);
+  // Taille réduite : lien éditorial discret (et non headline).
+  font-size: clamp(0.95rem, 1.25vw, 1.2rem);
+  color: var(--color-text);
+  transition: transform var(--dur-mid) var(--ease-out);
+
+  &:hover {
+    transform: translateX(8px);
+    color: var(--color-v-hover);
+  }
+}
+
+.contact__social-n {
+  font-size: var(--fs-small);
+  letter-spacing: 0.1em;
+  color: var(--color-muted);
+}
+
+.contact__social-arrow {
+  font-size: 0.85em;
+  transition: transform var(--dur-mid) var(--ease-out);
+
+  .contact__social:hover & {
+    transform: translate(4px, -4px);
+  }
+}
+
+// Mobile : tailles réduites + intro full-width + email lisible.
+@include mq-max('mobile') {
+  .panel--contact {
+    padding-top: clamp(80px, 12vh, 110px);
+    padding-bottom: clamp(110px, 14vh, 150px);
+  }
+
+  .contact__title {
+    font-size: clamp(2.4rem, 12vw, 4rem);
+  }
+
+  .contact__intro {
+    max-width: 100%;
+    font-size: 0.95rem;
+  }
+
+  // Email : taille équilibrée (assez gros pour être tappable, pas trop pour
+  // ne pas casser la mise en page sur un petit écran).
+  .contact__email {
+    font-size: clamp(1.4rem, 7vw, 2.4rem);
+    word-break: break-word; // au cas où l'écran est très étroit
+  }
+}

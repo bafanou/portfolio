@@ -1,0 +1,58 @@
+// =============================================================
+//  Variables CSS custom (runtime) — source de vérité du design
+//  system. Palette VERROUILLÉE (cf. README).
+// =============================================================
+
+:root {
+  // ----- Palette (base sombre + rampe de violets) -----
+  --color-bg: #0b0a12; // fond global (near-black violacé)
+  --color-surface: #15131f; // cartes, panneaux, overlays
+  --color-text: #eceaf2; // texte principal (off-white)
+  --color-muted: #837e9c; // texte secondaire (labels, années)
+
+  --color-v-deep: #5c5792; // violet profond (bord de gradient)
+  --color-accent: #9281c0; // accent par défaut (liens, focus)
+  --color-v-light: #9f8dc3; // violet clair (hover doux)
+  --color-v-hover: #be9cc7; // mauve clair (accent au survol)
+
+  // ----- Typographie -----
+  // TODO : déposer les WOFF2 dans /public/fonts puis activer les @font-face
+  //        dans base/_typography.scss. Fallbacks système en attendant.
+  --font-display: 'Fraunces', 'PP Editorial New', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', 'Neue Haas Grotesk', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  // Échelle typo (clamp pour responsive natif — cf. README).
+  --fs-hero: clamp(4rem, 12vw, 14rem);
+  --fs-h1: clamp(2.5rem, 6vw, 6rem);
+  --fs-h2: clamp(1.75rem, 3.5vw, 3rem);
+  --fs-body: clamp(0.95rem, 1.1vw, 1.125rem);
+  --fs-small: 0.85rem;
+
+  // ----- Espacements & grille -----
+  --gutter: clamp(16px, 2vw, 32px);
+  --section-padding: clamp(80px, 12vh, 200px);
+  --grid-columns: 12;
+
+  // ----- Mouvement -----
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.3s;
+  --dur-mid: 0.6s;
+  --dur-slow: 1s;
+
+  // ----- Z-index (échelle centralisée) -----
+  --z-canvas: 1; // canvas WebGL de fond
+  --z-content: 10; // contenu DOM
+  --z-nav: 100;
+  --z-transition: 900; // overlay de transition de page
+  --z-cursor: 1000; // curseur custom au-dessus de tout
+}
+
+// Bascule de contraste : quand le fond devient clair (mauve), le texte
+// passe en sombre. Posé par App via [data-bg='light'] sur <html>.
+// (Même spécificité que :root, placé après → l'emporte.)
+[data-bg='light'] {
+  --color-text: #16121f;
+  --color-muted: #4a4460;
+}

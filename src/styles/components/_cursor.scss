@@ -1,0 +1,49 @@
+// =============================================================
+//  Curseur custom (composant Cursor)
+// =============================================================
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-cursor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  pointer-events: none;
+  will-change: transform;
+  transition:
+    width var(--dur-fast) var(--ease-out),
+    height var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+
+  // État survol d'un élément interactif : agrandissement.
+  &.is-active {
+    width: 64px;
+    height: 64px;
+    background-color: var(--color-v-hover);
+  }
+}
+
+.cursor__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-bg);
+  white-space: nowrap;
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+
+  .cursor.has-label & {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

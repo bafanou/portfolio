@@ -1,0 +1,19 @@
+// =============================================================
+//  Transition de page (overlay clip-path)
+// =============================================================
+
+.transition {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-transition); // sous le curseur, au-dessus de tout le reste
+  pointer-events: none;
+  visibility: hidden; // GSAP autoAlpha alterne visibility + opacity
+}
+
+.transition__shape {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-accent); // couleur écrasée par JS au playIn
+  clip-path: circle(0% at 0% 100%);
+  will-change: clip-path;
+}

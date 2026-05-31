@@ -1,0 +1,56 @@
+// =============================================================
+//  Typographie
+// =============================================================
+
+// ---------------------------------------------------------------
+//  @font-face — À ACTIVER une fois les WOFF2 déposés dans
+//  /public/fonts. Exemple :
+//
+//  @font-face {
+//    font-family: 'Fraunces';
+//    src: url('/fonts/Fraunces-Variable.woff2') format('woff2');
+//    font-weight: 100 900;
+//    font-display: swap;
+//  }
+// ---------------------------------------------------------------
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: var(--fs-h1);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+}
+
+// Libellés mono (années, catégories, indices).
+.u-mono {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+// Titre d'échelle « hero ».
+.u-hero {
+  font-family: var(--font-display);
+  font-size: var(--fs-hero);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}

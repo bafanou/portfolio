@@ -1,0 +1,177 @@
+// =============================================================
+//  Page About — Parcours & Compétences
+// =============================================================
+@use '../abstracts/mixins' as *;
+
+// ----- Conteneurs communs : header + grille -----
+.panel--journey,
+.panel--skills {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: clamp(1.5rem, 3.5vh, 3rem);
+  align-content: start;
+  padding: clamp(60px, 9vh, 130px) var(--gutter);
+  // Padding bas large : laisse de la place pour le menu pill + flèche scroll.
+  padding-bottom: clamp(180px, 20vh, 260px);
+}
+
+// ----- Header (label peach + grand titre serif) -----
+.about__header {
+  max-width: 60ch;
+}
+
+.about__label {
+  color: #f4b89a; // peach
+  letter-spacing: 0.1em;
+  margin-bottom: clamp(0.5rem, 1.5vh, 1rem);
+}
+
+// Titre : BLANC PUR forcé (le data-bg=light flip rendait le texte sombre
+// et illisible sur le mauve). On verrouille pour rester lisible partout.
+// Taille légèrement réduite pour laisser respirer le contenu en dessous.
+.about__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5.5vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  color: #ffffff !important;
+
+  em {
+    font-style: italic;
+    color: var(--color-v-hover) !important; // mauve clair — accent
+  }
+}
+
+// =============================================================
+//  Panneau Parcours — 2 colonnes (Formation | Expérience)
+// =============================================================
+.about__columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 5vw, 5rem);
+  align-content: start;
+  max-width: min(92vw, 100rem);
+}
+
+// Titre de colonne (FORMATION / EXPÉRIENCE) — peach pour ressortir.
+.about__col-title {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: #f4b89a !important; // peach (cohérent avec le label)
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding-bottom: 0.6rem;
+  margin-bottom: clamp(0.8rem, 2vh, 1.3rem);
+  border-bottom: 1px solid rgba(244, 184, 154, 0.45);
+}
+
+.about__list {
+  display: flex;
+  flex-direction: column;
+  // Espacement réduit pour faire tenir 3 entrées par colonne.
+  gap: clamp(0.7rem, 1.6vh, 1.3rem);
+}
+
+.about__entry {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+// Date : blanc cassé translucide pour hiérarchie.
+.about__date {
+  font-size: var(--fs-small);
+  color: rgba(255, 255, 255, 0.65) !important;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.2rem;
+}
+
+// Rôle (intitulé principal) : blanc pur, taille légèrement resserrée.
+.about__role {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  color: #ffffff !important;
+  line-height: 1.2;
+}
+
+.about__detail {
+  font-size: var(--fs-small);
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+
+.about__place {
+  font-size: var(--fs-small);
+  color: rgba(255, 255, 255, 0.65) !important;
+  font-style: italic;
+}
+
+// =============================================================
+//  Panneau Compétences — grille fluide (7 catégories)
+// =============================================================
+.about__skills {
+  display: grid;
+  // Auto-fit : 4 cols en grand écran, 3, 2 puis 1 selon la largeur.
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(1.5rem, 2.5vw, 3rem) clamp(1.5rem, 3vw, 3.5rem);
+  max-width: min(94vw, 110rem);
+}
+
+.about__skill {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+// Numéro de bloc (01, 02, …) : peach, raccord visuel avec les labels.
+.about__skill-n {
+  font-size: var(--fs-small);
+  color: #f4b89a !important;
+  letter-spacing: 0.1em;
+}
+
+// Nom de catégorie : blanc pur, gros, ligne pêche dessous.
+.about__skill-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  color: #ffffff !important;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(244, 184, 154, 0.45); // ligne peach translucide
+}
+
+// Liste des outils : blanc cassé translucide pour la hiérarchie.
+.about__skill-list {
+  font-size: clamp(0.9rem, 1.05vw, 1rem);
+  color: rgba(255, 255, 255, 0.92) !important;
+  line-height: 1.55;
+}
+
+// ----- Responsive -----
+@include mq-max('mobile') {
+  .panel--journey,
+  .panel--skills {
+    padding-top: clamp(80px, 12vh, 110px);
+    padding-bottom: clamp(110px, 14vh, 150px);
+    gap: clamp(1.2rem, 3vh, 2rem);
+  }
+
+  .about__title {
+    font-size: clamp(2rem, 10vw, 3.5rem);
+  }
+
+  .about__columns {
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 4vh, 2.5rem);
+  }
+
+  .about__skills {
+    grid-template-columns: 1fr;
+    gap: clamp(1.2rem, 3vh, 1.8rem);
+  }
+
+  .about__skill-name {
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+  }
+}

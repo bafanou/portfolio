@@ -1,0 +1,282 @@
+// =============================================================
+//  Page Project — détail (façon image 2 / patrickheng)
+//  Côté GAUCHE : fond crème + image en cadre polaroid.
+//  Côté DROITE : panneau accent violet + titre surligné, description.
+// =============================================================
+@use '../abstracts/mixins' as *;
+
+.panel--detail {
+  position: relative;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  width: 100vw;
+  height: 100vh;
+}
+
+// ----- Média (gauche) — fond crème + cadre polaroid -----
+.detail__media {
+  position: relative;
+  background-color: #ece6d8; // crème chaude (rappel "papier" magazine)
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  // Padding bas généreux : laisse respirer le menu pill bas-gauche.
+  padding:
+    clamp(1.5rem, 3.5vw, 4rem)
+    clamp(1.5rem, 3.5vw, 4rem)
+    clamp(90px, 13vh, 150px);
+}
+
+// ----- Triangles décoratifs animés (zone crème, derrière l'image) -----
+.detail__triangles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0; // sous le cadre image (qui a son propre z-index implicite)
+}
+
+.detail__triangle {
+  position: absolute;
+  width: var(--tri-size, 60px);
+  height: var(--tri-size, 60px);
+  // Couleur pêche : écho aux cercles flottants du décor principal.
+  background-color: #f4b89a;
+  opacity: var(--tri-op, 0.85);
+  // Triangle pointant vers le haut ; la rotation est gérée par GSAP.
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  will-change: transform;
+}
+
+// Cadre intérieur : ombre portée + radius léger → effet image posée.
+.detail__media-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+  box-shadow:
+    0 1px 0 1px rgba(0, 0, 0, 0.04),
+    0 25px 60px rgba(0, 0, 0, 0.18);
+  background: linear-gradient(135deg, var(--color-v-deep) 0%, var(--color-v-light) 100%);
+}
+
+.detail__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; // image entière visible, pas de crop
+  background-color: #ffffff;
+  z-index: 1;
+}
+
+// Placeholder centré (visible uniquement si l'image n'est pas dispo).
+.detail__media-placeholder {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: center;
+  padding: 1rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.detail__media-cat {
+  font-size: var(--fs-small);
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.detail__media-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1;
+}
+
+// ----- Info colorée (droite) — panneau accent violet -----
+.detail__info {
+  position: relative;
+  background-color: var(--color-accent);
+  padding: clamp(2.5rem, 5vh, 4.5rem) clamp(2rem, 5vw, 4.5rem);
+  display: flex;
+  flex-direction: column;
+  color: #16121f; // texte sombre (lisible sur l'accent clair)
+  overflow-y: auto;
+}
+
+.detail__inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.8rem, 2.2vh, 1.5rem);
+}
+
+// ----- Bouton fermer (X) en cercle, coin haut-droite -----
+.detail__close {
+  position: absolute;
+  top: clamp(1rem, 3vh, 2rem);
+  right: clamp(1rem, 3vw, 2rem);
+  width: clamp(44px, 4vw, 60px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+  z-index: 2;
+
+  svg {
+    width: 40%;
+    height: 40%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+
+  &:hover {
+    background-color: #16121f;
+    color: var(--color-accent);
+  }
+}
+
+// Petit méta en haut (catégorie · année).
+.detail__cat {
+  font-size: var(--fs-small);
+  letter-spacing: 0.12em;
+  color: rgba(22, 18, 31, 0.6);
+  margin-bottom: clamp(0.3rem, 1vh, 0.8rem);
+}
+
+// ----- Titre avec bandes sombres (effet "texte surligné") -----
+// Taille ajustée pour que les titres courts (« Projet Unity », « Rosal Paris »)
+// tiennent sur UNE seule ligne ; les titres longs wrappent proprement.
+.detail__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.6vw, 4.8rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  // évite que la bande ne touche les bords du panneau
+  padding-right: clamp(50px, 5vw, 70px);
+  // CSS moderne : équilibre les lignes si wrap (titres longs).
+  text-wrap: balance;
+}
+
+.detail__title-band {
+  // Bande sombre derrière le texte (effet highlight magazine).
+  display: inline;
+  background-color: #16121f;
+  color: #ffffff;
+  padding: 0.08em 0.22em 0.12em;
+  // Chaque ligne (si retour à la ligne) hérite de sa propre bande.
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  // Légère respiration verticale entre les bandes.
+  line-height: 1.25;
+}
+
+.detail__sub {
+  color: rgba(22, 18, 31, 0.78);
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  font-style: italic;
+  margin-top: clamp(0.4rem, 1.2vh, 1rem);
+}
+
+.detail__description {
+  max-width: 56ch;
+  line-height: 1.6;
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  margin-top: clamp(0.6rem, 1.5vh, 1rem);
+}
+
+// ----- Stack (ligne compacte mono) -----
+.detail__stack {
+  font-size: var(--fs-small);
+  letter-spacing: 0.06em;
+  color: rgba(22, 18, 31, 0.6);
+  margin-top: clamp(1rem, 2.5vh, 1.8rem);
+  line-height: 1.4;
+}
+
+// ----- Liens (souligné fin, taille discrète) -----
+.detail__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: clamp(0.8rem, 2vh, 1.5rem);
+}
+
+.detail__link {
+  position: relative;
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #16121f;
+  padding-bottom: 0.15em;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(1);
+    transform-origin: left center;
+    transition: transform var(--dur-mid) var(--ease-out);
+  }
+
+  &:hover::after {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+}
+
+// ----- Mobile : empile média (haut) puis info (bas) -----
+@include mq-max('mobile') {
+  .panel--detail {
+    grid-template-columns: 1fr;
+    grid-template-rows: 45vh auto;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .detail__media {
+    padding: 1.2rem 1rem;
+  }
+
+  // Triangles : on les réduit fortement pour ne pas envahir l'écran.
+  .detail__triangle {
+    transform: scale(0.45);
+    opacity: calc(var(--tri-op, 0.85) * 0.7);
+  }
+
+  .detail__info {
+    padding: 2.2rem 1.4rem 110px; // marge basse pour le menu pills
+  }
+
+  .detail__close {
+    width: 40px;
+    top: 0.9rem;
+    right: 0.9rem;
+  }
+
+  .detail__title {
+    font-size: clamp(2rem, 10vw, 3.2rem);
+    padding-right: 50px; // espace pour le bouton fermer
+  }
+
+  .detail__description {
+    max-width: 100%;
+  }
+}

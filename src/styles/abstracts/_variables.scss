@@ -1,0 +1,12 @@
+// =============================================================
+//  Variables SCSS (compile-time)
+//  → breakpoints, z-index. Les valeurs runtime (couleurs,
+//    échelles) sont en variables CSS dans base/_root.scss.
+// =============================================================
+
+// Breakpoints (cf. README : mobile < 768, tablet 768-1024, desktop >= 1024).
+$breakpoints: (
+  'mobile': 768px,
+  'tablet': 1024px,
+  'desktop': 1280px,
+);

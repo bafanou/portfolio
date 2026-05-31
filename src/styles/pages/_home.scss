@@ -1,0 +1,221 @@
+// =============================================================
+//  Page Home
+// =============================================================
+@use '../abstracts/mixins' as *;
+
+// ----- Hero -----
+.panel--hero {
+  position: relative;
+  align-items: flex-start;
+  // Laisse de la place pour le menu/flèche en bas.
+  padding-bottom: clamp(120px, 16vh, 220px);
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 9vw, 10rem);
+  letter-spacing: -0.03em;
+  max-width: min(60vw, 60rem);
+}
+
+// Chaque mot sur sa ligne ; masque pour le reveal staggeré.
+.hero__line {
+  display: block;
+  overflow: hidden;
+  line-height: 1.02;
+
+  .char {
+    display: inline-block;
+    will-change: transform;
+  }
+}
+
+.hero__line--accent {
+  color: var(--color-v-hover);
+  font-style: italic;
+}
+
+// ----- Statement : « Je code, je conçois, je rends ça vivant. » -----
+// Positionné à droite du nom, dans l'espace libre. Joue sur l'italique
+// mauve des verbes et un léger décalage sur la 2e ligne pour le rythme.
+.hero__statement {
+  position: absolute;
+  top: 50%;
+  right: clamp(2rem, 5vw, 6rem);
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.3rem, 1vh, 0.8rem);
+  text-align: right;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5.2vw, 5.8rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--color-text);
+  max-width: 45vw;
+
+  em {
+    font-style: italic;
+    color: var(--color-v-hover); // mauve clair, accent
+  }
+}
+
+// Chaque ligne masquée pour le reveal char par char.
+.hero__statement-line {
+  display: block;
+  overflow: hidden;
+
+  .char {
+    display: inline-block;
+    will-change: transform;
+  }
+}
+
+// La 2e ligne est légèrement rentrée pour casser l'alignement strict.
+.hero__statement-line--indent {
+  padding-right: clamp(1rem, 4vw, 4.5rem);
+}
+
+@include mq-max('mobile') {
+  // Hero : padding pour ne pas coller sous le BAF en haut.
+  .panel--hero {
+    padding-top: clamp(80px, 12vh, 110px);
+    padding-bottom: clamp(110px, 14vh, 150px);
+  }
+
+  .hero__title {
+    max-width: 100%;
+    font-size: clamp(2.8rem, 13vw, 5rem);
+  }
+
+  // Statement : repasse en flux normal, sous le nom, taille réduite.
+  .hero__statement {
+    position: static;
+    transform: none;
+    margin-top: clamp(1.5rem, 4vh, 2.5rem);
+    text-align: left;
+    max-width: 100%;
+    font-size: clamp(1.8rem, 7vw, 2.8rem);
+  }
+
+  .hero__statement-line--indent {
+    padding-right: 0;
+    padding-left: clamp(1rem, 4vw, 2rem);
+  }
+
+  // CTA contact : taille adaptée.
+  .panel--cta .u-hero {
+    font-size: clamp(2.4rem, 12vw, 4rem);
+  }
+}
+
+// =============================================================
+//  Panneau About / Présentation (split photo / contenu)
+// =============================================================
+.panel--about {
+  display: grid;
+  grid-template-columns: minmax(280px, 38%) 1fr;
+  gap: clamp(2rem, 5vw, 6rem);
+  align-items: center;
+  padding: var(--section-padding) var(--gutter);
+}
+
+// ----- Photo (gauche) -----
+.about__photo {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  // Placeholder gradient visible tant que la photo n'est pas déposée.
+  background:
+    linear-gradient(135deg, var(--color-v-deep) 0%, var(--color-v-light) 100%);
+  display: grid;
+  place-items: center;
+  // Léger encadrement (faux cadre) pour le côté éditorial.
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.about__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1; // au-dessus du placeholder
+}
+
+.about__photo-initials {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 6rem);
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.25);
+  user-select: none;
+  pointer-events: none;
+}
+
+// ----- Contenu (droite) -----
+.about__content {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2.5vh, 2rem);
+  max-width: 60ch;
+}
+
+.about__label {
+  color: #f4b89a; // peach — écho des cercles du décor, plus visible que muted
+  letter-spacing: 0.1em;
+}
+
+// Titre About : texte régulier en NOIR (style de base), mots clés
+// italiques en MAUVE clair. Bio paragraphe (en dessous) reste en blanc.
+.about__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5.5vw, 5.5rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: #16121f !important; // noir/dark (style de base — verrouille le data-bg flip)
+
+  em {
+    font-style: italic;
+    color: var(--color-v-hover) !important; // mauve clair — accent
+  }
+}
+
+// Bio About : 2e phrase, plus petite, même traitement blanc forcé.
+.about__bio {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.6vw, 1.55rem);
+  line-height: 1.45;
+  color: #ffffff !important;
+  max-width: 52ch;
+
+  em {
+    font-style: italic;
+    color: #ffffff !important;
+  }
+}
+
+// Mobile : empile photo (haut) puis contenu (bas).
+@include mq-max('mobile') {
+  .panel--about {
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 4vh, 2.5rem);
+  }
+  .about__photo {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+}
+
+// =============================================================
+//  CTA contact
+// =============================================================
+.cta__link .u-hero {
+  display: block;
+  transition: transform var(--dur-mid) var(--ease-out);
+}
+
+.cta__link:hover .u-hero {
+  transform: translateX(8px);
+}

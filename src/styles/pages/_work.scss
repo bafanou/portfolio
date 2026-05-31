@@ -1,0 +1,169 @@
+// =============================================================
+//  Page Work — un projet par panneau
+// =============================================================
+@use '../abstracts/mixins' as *;
+
+.panel--project {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+
+  // Décor : triangle d'angle (varie pair/impair pour l'œil).
+  &::before {
+    content: '';
+    position: absolute;
+    width: clamp(80px, 12vw, 200px);
+    height: clamp(80px, 12vw, 200px);
+    pointer-events: none;
+    z-index: 0;
+    background-color: rgba(190, 156, 199, 0.28); // mauve translucide
+  }
+
+  &:nth-of-type(odd)::before {
+    top: 9%;
+    right: 7%;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%); // triangle bas-gauche-rempli
+  }
+
+  &:nth-of-type(even)::before {
+    bottom: 11%;
+    left: 7%;
+    clip-path: polygon(0 0, 100% 0, 0 100%); // triangle haut-droite-rempli
+    background-color: rgba(92, 87, 146, 0.32); // violet profond translucide
+  }
+}
+
+// Lien clickable qui enveloppe tout le contenu du projet.
+.project {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.5rem, 1.6vh, 1.4rem);
+  width: min(80vw, 64rem);
+  color: inherit;
+}
+
+.project__index {
+  position: absolute;
+  top: calc(-1 * var(--section-padding) + var(--gutter));
+  left: 0;
+  color: var(--color-muted);
+}
+
+// Média : cadre arrondi avec ombre portée + placeholder gradient.
+// Va jusqu'à ~960px de large sur grand écran pour vraiment peser à l'écran.
+.project__media {
+  position: relative;
+  width: clamp(320px, 48vw, 960px);
+  aspect-ratio: 16 / 9; // ratio écran (proche des screenshots de sites)
+  background: linear-gradient(135deg, var(--color-v-deep), var(--color-v-light));
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+  box-shadow:
+    0 1px 0 1px rgba(255, 255, 255, 0.06),
+    0 35px 80px rgba(0, 0, 0, 0.4);
+}
+
+// Images empilées (cover + galerie). Crossfade géré via la classe .is-active.
+// `object-fit: contain` = on voit l'IMAGE ENTIÈRE (pas de crop), à sa taille
+// naturelle, centrée dans le cadre. Le placeholder gradient remplit
+// d'éventuelles bandes (letterbox) si le ratio diffère.
+.project__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 1.1s var(--ease-in-out);
+  will-change: opacity;
+  z-index: 1;
+
+  &.is-active {
+    opacity: 1;
+  }
+}
+
+// Label catégorie : visible uniquement quand aucune image n'est chargée (placeholder).
+.project__media-label {
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.15em;
+  font-size: clamp(0.85rem, 1.1vw, 1.05rem);
+  z-index: 0;
+}
+
+.project__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 7.5vw, 8.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  // Le titre chevauche légèrement la miniature au-dessus.
+  margin-top: clamp(-1.8rem, -3vh, -1rem);
+  // Couleur explicite (suit le flip de contraste : clair/sombre auto).
+  color: var(--color-text);
+  transition: transform var(--dur-mid) var(--ease-out);
+}
+
+.project__sub {
+  max-width: 36ch;
+  color: var(--color-text);
+}
+
+.project__meta {
+  color: var(--color-muted);
+  letter-spacing: 0.1em;
+}
+
+// Hover : léger zoom du titre (pas de changement de couleur, l'agrandissement
+// du curseur custom suffit comme signal d'interactivité).
+.project:hover .project__title {
+  transform: scale(1.02);
+}
+
+// =============================================================
+//  Mobile : on resserre image, titre, indices pour tenir confortablement.
+// =============================================================
+@include mq-max('mobile') {
+  .panel--project {
+    padding-top: clamp(80px, 12vh, 130px);
+    padding-bottom: clamp(110px, 15vh, 170px);
+  }
+
+  .project {
+    width: 88vw;
+    gap: 0.8rem;
+  }
+
+  // Index repositionné dans le flux (sinon il sort du panneau en vertical).
+  .project__index {
+    position: static;
+    margin: 0 auto 0.4rem;
+  }
+
+  .project__media {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .project__title {
+    font-size: clamp(2.2rem, 11vw, 3.4rem);
+    margin-top: 0; // pas de chevauchement sur mobile (espace réduit)
+  }
+
+  .project__sub {
+    font-size: 0.95rem;
+  }
+
+  // Triangles décor : on les réduit / on en cache certains pour ne pas
+  // surcharger le petit écran.
+  .panel--project::before {
+    width: clamp(50px, 14vw, 90px);
+    height: clamp(50px, 14vw, 90px);
+  }
+}

@@ -1,0 +1,79 @@
+// =============================================================
+//  Scroll & panneaux
+//  - Desktop (.is-horizontal) : le contenu s'étire sur l'axe X,
+//    Lenis pilote le défilement horizontal (droite → gauche).
+//  - Mobile (.is-vertical) : panneaux empilés, scroll vertical natif.
+// =============================================================
+@use '../abstracts/mixins' as *;
+
+// Panneau : unité plein écran de l'expérience.
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1rem, 2vh, 2rem);
+  padding: var(--section-padding) var(--gutter);
+}
+
+// ---------- Mode HORIZONTAL (desktop) ----------
+.is-horizontal {
+  // Masque agressif de la scrollbar native (toutes les surfaces, tous browsers).
+  // → Le progress ring du bouton scroll devient le SEUL indicateur visible.
+  &,
+  body {
+    scrollbar-width: none; // Firefox
+    -ms-overflow-style: none; // IE / Edge legacy
+  }
+
+  &::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+    background: transparent;
+  }
+
+  body {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  [data-page] {
+    display: flex;
+    flex-direction: row;
+    width: max-content; // crée l'overflow horizontal
+    height: 100vh;
+  }
+
+  .panel {
+    flex: 0 0 100vw;
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+// Recommandations Lenis (évite les conflits de scroll-behavior).
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+// ---------- Mode VERTICAL (mobile) ----------
+.is-vertical {
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  [data-page] {
+    display: block;
+  }
+
+  .panel {
+    width: 100%;
+    min-height: 100vh;
+  }
+}

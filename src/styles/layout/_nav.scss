@@ -1,0 +1,201 @@
+// =============================================================
+//  Navigation — chrome persistant.
+//  Brand (haut-gauche), menu (bas-gauche), flèche scroll (bas-droite).
+// =============================================================
+@use '../abstracts/mixins' as *;
+
+.nav {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-nav);
+  pointer-events: none; // laisse passer les clics, sauf sur les enfants
+
+  a,
+  button {
+    pointer-events: auto;
+  }
+}
+
+// ----- Brand (haut-gauche) — pill peach, visible sur tout fond -----
+.nav__brand {
+  position: fixed;
+  top: var(--gutter);
+  left: var(--gutter);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.05rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  font-size: clamp(0.85rem, 0.95vw, 1rem);
+  border-radius: 999px;
+  background-color: rgba(11, 10, 18, 0.42);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  // Blanc pour la lisibilité maximale sur tous les fonds.
+  color: #ffffff;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+
+  &:hover {
+    background-color: rgba(11, 10, 18, 0.7);
+    transform: translateY(-1px);
+  }
+}
+
+// ----- Menu (bas-gauche) -----
+.nav__menu {
+  position: fixed;
+  left: var(--gutter);
+  bottom: var(--gutter);
+  display: flex;
+  gap: clamp(18px, 2vw, 36px);
+
+  a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.95rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-radius: 999px;
+    // Pill semi-transparente : reste lisible sur n'importe quel fond
+    // (violet, mauve, ou cercle pêche qui passe dessous).
+    background-color: rgba(11, 10, 18, 0.42);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #eceaf2; // off-white forcé (la pill assure le contraste)
+    transition:
+      background-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out);
+
+    &:hover {
+      background-color: rgba(11, 10, 18, 0.68);
+    }
+
+    &.is-active {
+      background-color: var(--color-v-hover);
+      color: var(--color-bg);
+    }
+  }
+}
+
+// ----- Bouton scroll (bas-droite) — compact, un seul cercle blanc bold -----
+.nav__scroll {
+  position: fixed;
+  right: var(--gutter);
+  bottom: var(--gutter);
+  width: clamp(50px, 4vw, 64px); // petit et discret
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  background: none;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: #ffffff;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+// Cercle blanc bold avec progression au scroll.
+// Visuellement UN SEUL cercle : 2 layers superposés (même position, même
+// épaisseur) → le fond reste faint, la progression devient bright en se
+// remplissant au scroll. On rotate de -90° pour démarrer à midi.
+.nav__scroll-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transform: rotate(-90deg);
+
+  circle {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3; // bold
+  }
+}
+
+// Fond : cercle complet faible (toujours visible → le bouton est lisible
+// même à scroll = 0).
+.nav__scroll-ring-bg {
+  opacity: 0.28;
+}
+
+// Progression : arc bright qui pousse depuis le haut ; piloté par JS
+// (stroke-dasharray + stroke-dashoffset).
+.nav__scroll-ring-fg {
+  opacity: 1;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.18s var(--ease-out);
+}
+
+// Flèche centrée (svg superposé), animation nudge subtile.
+.nav__scroll-arrow {
+  position: relative;
+  width: 44%;
+  height: 44%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: nav-nudge 1.8s var(--ease-in-out) infinite;
+}
+
+// Hover : léger zoom de l'ensemble.
+.nav__scroll:hover {
+  transform: scale(1.12);
+}
+
+@keyframes nav-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes nav-nudge {
+  0%,
+  100% {
+    transform: translateX(-2px);
+  }
+  50% {
+    transform: translateX(3px);
+  }
+}
+
+// Sur mobile (scroll vertical) : on masque l'indicateur horizontal.
+.is-vertical .nav__scroll {
+  display: none;
+}
+
+// Pages où le bouton scroll n'a pas de sens (1 seul écran) → caché.
+[data-page-name='contact'] .nav__scroll {
+  display: none;
+}
+
+// =============================================================
+//  Mobile : pills plus compactes pour tenir sur petits écrans.
+// =============================================================
+@include mq-max('mobile') {
+  .nav__brand {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+  }
+
+  .nav__menu {
+    gap: 6px;
+
+    a {
+      padding: 0.4rem 0.7rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+    }
+  }
+}

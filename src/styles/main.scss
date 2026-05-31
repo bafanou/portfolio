@@ -1,0 +1,26 @@
+// =============================================================
+//  main.scss — point d'entrée des styles (architecture 7-1)
+//  Ordre : abstracts (silencieux) → base → layout → components → pages.
+// =============================================================
+
+// --- Base (émet du CSS) ---
+@use 'base/root';
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/global';
+
+// --- Layout ---
+@use 'layout/scroll';
+@use 'layout/nav';
+
+// --- Components ---
+@use 'components/cursor';
+@use 'components/preloader';
+@use 'components/transition';
+
+// --- Pages ---
+@use 'pages/home';
+@use 'pages/work';
+@use 'pages/project';
+@use 'pages/about';
+@use 'pages/contact';

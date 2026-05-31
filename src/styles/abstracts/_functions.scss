@@ -1,0 +1,9 @@
+// =============================================================
+//  Fonctions SCSS utilitaires
+// =============================================================
+@use 'sass:math';
+
+// Convertit une valeur en px vers des rem (base 16px par défaut).
+@function rem($px, $base: 16) {
+  @return math.div($px, $base) * 1rem;
+}

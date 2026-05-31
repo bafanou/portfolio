@@ -1,0 +1,39 @@
+// =============================================================
+//  Mixins SCSS
+// =============================================================
+@use 'sass:map';
+@use 'variables' as v;
+
+// Media query min-width à partir d'un breakpoint nommé.
+//   @include mq('tablet') { ... }
+@mixin mq($name) {
+  $bp: map.get(v.$breakpoints, $name);
+  @if $bp {
+    @media (min-width: $bp) {
+      @content;
+    }
+  } @else {
+    @error "Breakpoint inconnu : '#{$name}'.";
+  }
+}
+
+// Media query max-width (utile pour le fallback mobile : scroll vertical).
+//   @include mq-max('mobile') { ... }
+@mixin mq-max($name) {
+  $bp: map.get(v.$breakpoints, $name);
+  @if $bp {
+    @media (max-width: #{$bp - 0.02px}) {
+      @content;
+    }
+  } @else {
+    @error "Breakpoint inconnu : '#{$name}'.";
+  }
+}
+
+// Centre un élément en absolu dans son parent.
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
