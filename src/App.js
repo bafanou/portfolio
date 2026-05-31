@@ -11,7 +11,6 @@ import Camera from '@/webgl/Camera.js';
 import Scene from '@/webgl/Scene.js';
 import Background from '@/webgl/objects/Background.js';
 import Navigation from '@/components/Navigation.js';
-import Cursor from '@/components/Cursor.js';
 import Preloader from '@/components/Preloader.js';
 import Transition from '@/components/Transition.js';
 import Home from '@/pages/Home.js';
@@ -19,7 +18,7 @@ import Work from '@/pages/Work.js';
 import Project from '@/pages/Project.js';
 import About from '@/pages/About.js';
 import Contact from '@/pages/Contact.js';
-import { isDev, isMobile, isTouch } from '@/utils/device.js';
+import { isDev, isMobile } from '@/utils/device.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -66,7 +65,8 @@ export default class App {
 
     // ----- Composants persistants -----
     this.nav = new Navigation({ root: document.body, app: this });
-    this.cursor = isTouch() ? null : new Cursor({ time: this.time, getPointer: () => this.pointer });
+    // Curseur custom désactivé : on garde le curseur natif du navigateur.
+    this.cursor = null;
     // Overlay de transition de page (couleur différente par destination).
     this.transition = new Transition();
 

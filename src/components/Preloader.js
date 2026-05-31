@@ -51,7 +51,7 @@ export default class Preloader {
 
   // loadPromise : promesse des assets critiques (peut être instantanée).
   async run(loadPromise = Promise.resolve()) {
-    const minDuration = 1.6; // laisse respirer l'animation des disques
+    const minDuration = 0.8; // assez court pour ne pas faire attendre l'utilisateur
     const start = performance.now();
 
     gsap.to(this._progress, {
