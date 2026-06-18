@@ -52,7 +52,7 @@ const EXPERIENCE = [
   },
   {
     date: 'Févr. 2023 - Avril 2024',
-    role: 'Assistant Multimédia · Web (CDD)',
+    role: 'Assistant Multimédia · Web (Alternance)',
     detail: 'Novo Image, Cotonou (Bénin)',
     place: 'App web full-stack RH · Prototypes UI/UX Figma, XD, Photoshop',
   },
