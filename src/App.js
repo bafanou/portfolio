@@ -191,9 +191,17 @@ export default class App {
       this.showCircles = !page.hideCircles;
       // Nom de page exposé en data-attribute → CSS peut adapter (ex. hide scroll).
       document.documentElement.dataset.pageName = page.constructor.name.toLowerCase();
-      // Recalcule les triggers après changement de contenu.
-      ScrollTrigger.refresh();
+      // Reset au début de la nouvelle page.
       if (this.lenis) this.lenis.scrollTo(0, { immediate: true });
+      // ⚠️ FIX scroll bloqué : recalcule les limites de scroll APRÈS que le
+      // DOM de la nouvelle page soit posé. Sans ça, Lenis garde la largeur
+      // scrollable de la page précédente — résultat : sur /work (8 panneaux)
+      // après être venu d'une page courte (3 panneaux), on ne peut scroller
+      // que jusqu'au 3e panneau. Le rAF garantit le layout calculé.
+      requestAnimationFrame(() => {
+        if (this.lenis) this.lenis.resize();
+        ScrollTrigger.refresh();
+      });
       // Reveal immédiat lors des navigations (le 1er chargement passe par le preloader).
       if (!this._firstLoad && page.reveal) page.reveal();
     });
