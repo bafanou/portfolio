@@ -68,7 +68,27 @@ export const projects = [
     featured: false,
   },
 
-  // ----- 04 AUTORA ---------------------------------------------
+  // ----- 04 PILS — DASHBOARD ANALYTIQUE -----------------------
+  {
+    slug: 'pils',
+    title: 'PILS',
+    subtitle: 'Dashboard analytique - Gestion de RDV médicaux',
+    year: 2025,
+    category: 'Dev',
+    role: 'Analyse de données & visualisation',
+    stack: ['JavaScript', 'Charts', 'MySQL', 'KPI', 'Tableaux de bord'],
+    cover: '/images/projects/pils/cover.png',
+    gallery: [
+      '/images/projects/pils/01.png',
+      '/images/projects/pils/02.png',
+    ],
+    description:
+      "Tableau de bord analytique pour le suivi des rendez-vous médicaux : évolution quotidienne des RDV (annulés, replacés par patient, replacés après appel, non replacés) et répartition par spécialité (Ophtalmologie, Pédiatrie, Pneumologie, Cardio...). Visualisations interactives pour piloter la gestion des plannings et faciliter la prise de décision.",
+    links: {},
+    featured: true,
+  },
+
+  // ----- 05 AUTORA ---------------------------------------------
   {
     slug: 'autora',
     title: 'AUTORA',

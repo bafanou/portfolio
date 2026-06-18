@@ -51,7 +51,7 @@ export default class Home extends BasePage {
         </div>
 
         <div class="about__content">
-          <p class="u-mono about__label" data-reveal>Étudiant · En recherche d'alternance</p>
+          <p class="u-mono about__label" data-reveal>Étudiant · Alternance Assistant Chef de Projet ERP</p>
 
           <h2 class="about__title" data-reveal>
             Étudiant en <em>Master Informatique</em><br />

@@ -33,60 +33,76 @@ const FORMATION = [
 
 const EXPERIENCE = [
   {
-    date: 'Janv. 2023 - auj.',
-    role: 'Développeur Web & Marketing Digital',
-    detail: 'Freelance',
-    place: 'Conception, développement, SEO',
+    date: 'Mars 2025 - auj.',
+    role: 'Assistant Intégration EDI',
+    detail: 'Zayin Consulting (à distance)',
+    place: 'Flux B2B EDIFACT / XML / JSON · SAP & Sage · AS2, SFTP, HTTP',
   },
   {
     date: 'Mars 2025 - Juin 2025',
     role: 'Stage Dév. Web · Assistant Marketing',
-    detail: 'Reine Eli - France',
-    place: 'Développement et personnalisation d un site e-commerce WordPress Elementor Pro - WooCommerce',
+    detail: 'Reine Eli, Fouleix (24)',
+    place: 'E-commerce WordPress · Elementor Pro · WooCommerce · SEO',
   },
-
- {
-    date: 'Février 2023 - Avril 2024',
-    role: 'Assistant Multimédia . Web (CDD)',
-    detail: ' Novo Image, Cotonou Benin',
-    place: 'Développement web full-stack . Création de prototypes UI UX (Figma, Adobe XD, Photoshop)',
+  {
+    date: 'Janv. 2023 - auj.',
+    role: 'Développeur Web (Freelance)',
+    detail: 'Conduite de projets web complets',
+    place: 'Recueil du besoin · Devis · Livraison · Maintenance',
+  },
+  {
+    date: 'Févr. 2023 - Avril 2024',
+    role: 'Assistant Multimédia · Web (CDD)',
+    detail: 'Novo Image, Cotonou (Bénin)',
+    place: 'App web full-stack RH · Prototypes UI/UX Figma, XD, Photoshop',
   },
 ];
 
-// 7 catégories — l'essentiel par bloc.
+// 9 catégories — ERP & EDI et Données & Analyse en tête (positionnement
+// alternance Assistant Chef de Projet ERP).
 const SKILLS = [
   {
     n: '01',
+    name: 'ERP & EDI',
+    list: 'EDIFACT · Mapping · Flux B2B (commandes, livraisons, factures) · SAP · Sage · Protocoles AS2 · SFTP · HTTP · Documentation technique',
+  },
+  {
+    n: '02',
+    name: 'Données & Analyse',
+    list: 'Excel · Tableaux croisés dynamiques · Recherche V · MySQL · Formats XML · JSON · CSV',
+  },
+  {
+    n: '03',
+    name: 'Langages',
+    list: 'Python · PHP · Laravel · MySQL · HTML · CSS · JavaScript · C++',
+  },
+  {
+    n: '04',
+    name: 'Outils & Méthodes',
+    list: 'Suite Microsoft Office · Git · Jira · n8n · Méthodes agiles',
+  },
+  {
+    n: '05',
     name: 'WordPress',
     list: 'Elementor Pro · Theme Builder · WooCommerce · ACF · Yoast · Rank Math · Wordfence',
   },
   {
-    n: '02',
-    name: 'Langages',
-    list: 'HTML · CSS · JavaScript · PHP · Laravel · Python · MySQL · C++',
-  },
-  {
-    n: '03',
+    n: '06',
     name: 'Design',
     list: 'Figma · Pack Adobe (PS, AI, ID, XD) · Canva · Responsive & prototypage',
   },
   {
-    n: '04',
-    name: 'Photo · Vidéo',
-    list: 'Photographie · Montage vidéo  Premiere Pro · DaVinci Resolve · Lightroom',
-  },
-  {
-    n: '05',
+    n: '07',
     name: 'SEO · SEA',
     list: 'Google Search Console · SEMrush · Ahrefs · Wincher · Ubersuggest',
   },
   {
-    n: '06',
+    n: '08',
     name: 'IA · Automatisation',
     list: 'n8n · Claude Code · ChatGPT · Midjourney · DALL·E · RunwayML',
   },
   {
-    n: '07',
+    n: '09',
     name: 'Game · IoT · Réseau',
     list: 'Unity · Arduino · Administration réseau informatique',
   },
